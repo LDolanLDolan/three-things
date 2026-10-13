@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Three Things Still Here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+/* Layout: one card at a time, centred in the screen like a note left on a staff-room table; a lanyard badge above, the visitor's room all around. */
+:root {
+  --wall: #e9eeea;        /* care-home corridor paint */
+  --card: #f8faf7;
+  --ink: #1d2523;
+  --muted: #5a6662;
+  --rule: #cfd8d3;
+  --lanyard: #2e5f63;     /* staff lanyard teal */
+  --lamp: #2e5f63;
+  --font-voice: "Spectral", Georgia, "Times New Roman", serif;
+  --font-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-badge: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --wall: #11161b; --card: #182027; --ink: #ece7dc; --muted: #9aa5a7;
+    --rule: #2b3640; --lanyard: #7fb2b5; --lamp: #e8c97a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --wall: #11161b; --card: #182027; --ink: #ece7dc; --muted: #9aa5a7;
+  --rule: #2b3640; --lanyard: #7fb2b5; --lamp: #e8c97a; color-scheme: dark;
+}
+
+html, body { height: 100%; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--wall);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  padding-inline: 16px;
+  padding-block: 0;
+}
+.shell {
+  min-height: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-block: 1.25rem 1.75rem;
+}
+
+/* Badge */
+.badge {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  font-family: var(--font-badge); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted);
+}
+.badge .who { display: flex; align-items: center; gap: .6rem; min-width: 0; }
+.dots { display: inline-flex; gap: 4px; flex: none; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--lanyard); display: block; }
+.badge .count { font-variant-numeric: tabular-nums; flex: none; }
+
+/* Card */
+.stage { flex: 1; display: flex; align-items: center; }
+.card {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  display: flex; flex-direction: column; gap: 1rem;
+  min-height: 22rem;
+}
+.label {
+  font-family: var(--font-badge); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--lanyard); margin: 0;
+}
+h1, h2 { font-family: var(--font-voice); font-weight: 500; text-wrap: balance; margin: 0; line-height: 1.2; }
+h1 { font-size: clamp(2rem, 7vw, 2.75rem); }
+h2 { font-size: clamp(1.6rem, 5.5vw, 2.1rem); }
+.card p { margin: 0; max-width: 62ch; }
+.frame { color: var(--ink); }
+.voice {
+  font-family: var(--font-voice); font-size: clamp(1.25rem, 4.2vw, 1.5rem); line-height: 1.45;
+  display: flex; flex-direction: column; gap: .15rem; margin: 0;
+}
+.voice span { display: block; }
+.attr { font-size: .85rem; color: var(--muted); }
+.choice { font-size: .95rem; color: var(--muted); font-style: italic; }
+.quiet { min-height: 22rem; justify-content: center; align-items: center; text-align: center; }
+.quiet h2 { font-size: clamp(1.5rem, 5vw, 1.9rem); }
+.quiet p { color: var(--muted); }
+.end-line { font-family: var(--font-voice); font-size: clamp(1.8rem, 6vw, 2.4rem); color: var(--lamp); }
+.small { font-size: .9rem; color: var(--muted); }
+.support { font-size: .9rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; }
+.support strong { color: var(--ink); font-variant-numeric: tabular-nums; user-select: all; }
+a { color: var(--lanyard); text-underline-offset: 3px; }
+
+/* Thinking note */
+.thinking {
+  background: transparent;
+  border-top: 1px dashed var(--rule);
+  padding-top: .9rem; margin-top: auto;
+  font-size: .9rem; color: var(--muted);
+}
+.thinking b { font-family: var(--font-badge); font-weight: 500; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--lanyard); display: block; margin-bottom: .25rem; }
+
+/* Controls */
+.controls { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.nav { display: flex; gap: .75rem; }
+button {
+  font: inherit; font-size: 1rem; cursor: pointer;
+  border-radius: 999px; padding: .65rem 1.3rem; min-height: 44px;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink);
+}
+button.primary { background: var(--lanyard); border-color: var(--lanyard); color: var(--card); }
+button:disabled { opacity: .35; cursor: default; }
+button:focus-visible, a:focus-visible, input:focus-visible + span { outline: 3px solid var(--lamp); outline-offset: 3px; }
+.toggle { display: inline-flex; align-items: center; gap: .5rem; font-size: .9rem; color: var(--muted); cursor: pointer; }
+.toggle input { width: 1.1rem; height: 1.1rem; accent-color: var(--lanyard); }
+.start-buttons { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: .5rem; }
+
+.fade { animation: fade .45s ease both; }
+@keyframes fade { from { opacity: .0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .fade { animation: none; } }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <div class="badge" aria-hidden="true">
+    <span class="who"><span class="dots"><i></i><i></i><i></i></span>Hawthorn Care · Nights</span>
+    <span class="count" id="count"></span>
+  </div>
+
+  <main class="stage">
+    <section class="card" id="card" aria-live="polite"></section>
+  </main>
+
+  <div class="controls" id="controls">
+    <label class="toggle"><input type="checkbox" id="thinking-toggle"><span>Show the thinking behind each card</span></label>
+    <div class="nav">
+      <button type="button" id="back">Back</button>
+      <button type="button" id="next" class="primary">Continue</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const cards = [
+  { label: "4am",
+    html: `<h2>It's four in the morning.</h2>
+      <p class="frame">Somewhere, Christine is heating a sandwich in a care-home staff room. She and the microwave have an understanding. Upstairs, they are opening a new wing.</p>`,
+    note: "The piece begins in Christine's time, not yours. The gap between her 4am and whatever hour it is where you are is the first layer." },
+  { label: "The room",
+    html: `<h2>Something is happening around you.</h2>
+      <p class="frame">A sound. A light. Someone passing. Notice one thing this screen cannot know.</p>`,
+    note: "The work never claims to know where you are. Like Darkfield's attention to the space an audience occupies, it makes your surroundings felt, but through an invitation rather than darkness or sound." },
+  { label: "The handout",
+    html: `<p class="frame">Christine finds a handout from a training day: <em>Simple grounding exercises for carers and residents.</em> She had filed it under things nobody has time for. Tonight she tries it.</p>
+      <p class="voice"><span>Find three objects within reach.</span><span>Place them where you can see them without moving your head.</span><span>Name them silently.</span></p>
+      <p class="choice">Or just keep reading.</p>`,
+    note: "A short instruction you complete in your own way, in the spirit of Yoko Ono's instruction pieces. The words come from the training handout in the script. Taking part is always optional." },
+  { label: "Your constellation",
+    html: `<p class="voice"><span>That's your constellation.</span><span>Your three points.</span><span>Tomorrow they might move closer.</span><span>Or further apart.</span><span>That's allowed.</span></p>
+      <p class="attr">Christine</p>`,
+    note: "Recognition that does not need things to stay still. It is how Christine learns to meet her father." },
+  { label: "The mug",
+    html: `<p class="voice"><span>This mug.</span><span>I'm sure it had a name once.</span><span>Now it's just… the mug.</span><span>Everyone drinks out of it, nobody washes it properly,</span><span>and it still shows up to work every day.</span></p>
+      <p class="attr">Christine</p>`,
+    note: "Object theatre: an ordinary thing carries a person. In this version, your three objects are the ones performing." },
+  { label: "Suggestion box",
+    html: `<p class="voice"><span>Suggestion: a proper mug for nights.</span><span>One each. Names on.</span><span>So we know who we are.</span></p>
+      <p class="attr">A note in the staff-room suggestion box</p>`,
+    note: "Other voices layer into Christine's: the suggestion box, the staff group chat she calls her Greek chorus. Care workers who are rarely heard, asking to be named." },
+  { label: "Interruption",
+    html: `<h2>If something interrupted you just now, let it in.</h2>
+      <p class="frame">A message. A voice in the next room. Someone at the door. It belongs here too.</p>`,
+    note: "After John Cage's 4′33″: whatever the room brings is part of the work, not a failure to concentrate." },
+  { label: "Her father",
+    html: `<p class="voice"><span>My dad…</span><span>He was a whole country once.</span></p>
+      <p class="voice"><span>My job wasn't to correct him.</span><span>It was to sit there like a paperweight and go,</span><span>'I see you.</span><span>I'm here.</span><span>You're still a person, even if you've mislaid my name.'</span></p>
+      <p class="attr">Christine</p>`,
+    note: "Witness, not repair. Christine stops trying to make her father remember and stays with who he is now. Two reviewers of the audio quoted this passage." },
+  { label: "Take your time", quiet: true,
+    html: `<h2>Take your time.</h2><p>When you're ready, look up.</p>`,
+    note: "The pause gives the return its meaning. In the audio, a long stretch of Christine's night sits here." },
+  { label: "Return",
+    html: `<p class="voice"><span>Your three things are still there, yeah?</span><span>Check them.</span></p>
+      <p class="voice"><span>Tomorrow they might be different things.</span><span>That's fine.</span></p>
+      <p class="attr">Christine</p>`,
+    note: "Coming back is the method. Recognition happens through return, to a person or to three things on a table." },
+  { label: "Still here", closing: true, html: "",
+    note: "At Felicity Hammond's End-of-Life-Service, eulogies could be spoken, pinned up or taken home unread. A private response counts here too." }
+];
+
+const startHtml = `<p class="label">A text piece</p>
+  <h1>Three Things Still Here</h1>
+  <p class="frame">A short piece about care, memory and the things around you. Christine is a fictional night-shift carer.</p>
+  <p class="frame">It takes about five minutes and needs no sound. Go at your own pace and stop whenever you like. Nothing you do is recorded.</p>
+  <div class="start-buttons">
+    <button type="button" class="primary" id="begin">Begin</button>
+    <button type="button" id="begin-return">I've been here before</button>
+  </div>`;
+
+function closingHtml(returning) {
+  return `<p class="end-line">${returning ? "You have been somewhere else since then." : "You were here."}</p>
+    <p class="frame">Nothing you did here was recorded.</p>
+    <p class="small">Adapted from <em>The Shape of Things Undone</em>, an audio monologue by Lita Doolan, Brighton Fringe 2026. <a href="https://www.brightonfringe.org/events/the-shape-of-things-undone/" target="_blank" rel="noopener">Hear the full piece</a>.</p>
+    <p class="support">If this touched on something close to you, Dementia UK's Admiral Nurse Dementia Helpline is on <strong>0800 888 6678</strong>.</p>`;
+}
+
+const cardEl = document.getElementById("card");
+const countEl = document.getElementById("count");
+const controls = document.getElementById("controls");
+const back = document.getElementById("back");
+const next = document.getElementById("next");
+const toggle = document.getElementById("thinking-toggle");
+
+let i = -1;          // -1 = start screen
+let returning = false;
+
+try { toggle.checked = localStorage.getItem("tt-thinking") === "1"; } catch (e) {}
+toggle.addEventListener("change", () => {
+  try { localStorage.setItem("tt-thinking", toggle.checked ? "1" : "0"); } catch (e) {}
+  render(false);
+});
+
+function render(animate = true) {
+  cardEl.classList.remove("fade", "quiet");
+  if (i < 0) {
+    cardEl.innerHTML = startHtml;
+    countEl.textContent = "";
+    controls.hidden = true;
+    document.getElementById("begin").onclick = () => go(0, false);
+    document.getElementById("begin-return").onclick = () => go(0, true);
+  } else {
+    const c = cards[i];
+    controls.hidden = false;
+    countEl.textContent = `${i + 1} of ${cards.length}`;
+    const body = c.closing ? closingHtml(returning) : c.html;
+    const note = toggle.checked ? `<div class="thinking"><b>The thinking</b>${c.note}</div>` : "";
+    cardEl.innerHTML = `<p class="label">${c.label}</p>${body}${note}`;
+    if (c.quiet) cardEl.classList.add("quiet");
+    next.textContent = c.closing ? "Begin again" : "Continue";
+  }
+  if (animate) { void cardEl.offsetWidth; cardEl.classList.add("fade"); }
+}
+
+function go(n, ret) {
+  if (typeof ret === "boolean") returning = ret;
+  i = n;
+  render();
+  const focusTarget = i < 0 ? document.getElementById("begin") : next;
+  if (focusTarget) focusTarget.focus({ preventScroll: true });
+}
+
+next.addEventListener("click", () => {
+  if (i >= cards.length - 1) go(-1); else go(i + 1);
+});
+back.addEventListener("click", () => go(i - 1));
+document.addEventListener("keydown", (e) => {
+  if (i < 0) return;
+  if (e.key === "ArrowRight") { e.preventDefault(); next.click(); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); back.click(); }
+});
+
+render(false);
+</script>
+</body>
+</html>
