@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Three Things Still Here (Nights)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+/* A single dark world: a staff room at 4am with the lights off. The only lit things are Christine's words and the scraps of paper. */
+:root {
+  color-scheme: dark;
+  --dark: #0a0c0f;
+  --dim: #6f7780;
+  --ink: #d8d3c7;
+  --lamp: #e3c57c;        /* microwave and desk-lamp light */
+  --edge: #1c2127;
+  --paper: #ebe6d8;
+  --pencil: #3f4247;
+  --rule-blue: rgba(86, 122, 168, .35);
+  --margin-red: rgba(190, 80, 80, .35);
+  --font-voice: "Spectral", Georgia, "Times New Roman", serif;
+  --font-ui: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-badge: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --font-hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--dark);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  padding-inline: 16px;
+}
+body::before {          /* a faint pool of lamp light, low on the page */
+  content: ""; position: fixed; inset: 0; pointer-events: none;
+  background: radial-gradient(60% 45% at 50% 70%, rgba(227, 197, 124, .07), transparent 70%);
+}
+.shell {
+  position: relative;
+  min-height: 100%;
+  max-width: 34rem;
+  margin: 0 auto;
+  display: flex; flex-direction: column; gap: 1.5rem;
+  padding-block: 1.25rem 2rem;
+}
+.top {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  font-family: var(--font-badge); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--dim);
+}
+.top .who { display: flex; align-items: center; gap: .6rem; min-width: 0; }
+.dots { display: inline-flex; gap: 4px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); display: block; }
+.leave {
+  font: inherit; letter-spacing: inherit; text-transform: inherit;
+  background: none; border: none; color: var(--dim); cursor: pointer; padding: .4rem 0; min-height: 44px;
+}
+.leave:hover { color: var(--ink); }
+
+.stage { flex: 1; display: flex; align-items: center; }
+.card {
+  width: 100%;
+  display: flex; flex-direction: column; gap: 1.1rem;
+  padding-block: 1rem;
+  transition: opacity .5s ease;
+}
+.card.out { opacity: 0; }
+.label { font-family: var(--font-badge); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin: 0; }
+h1, h2 { font-family: var(--font-voice); font-weight: 400; margin: 0; line-height: 1.2; text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(2.1rem, 8vw, 2.9rem); }
+h2 { font-size: clamp(1.65rem, 6vw, 2.2rem); }
+p { margin: 0; max-width: 60ch; }
+.voice {
+  font-family: var(--font-voice); font-size: clamp(1.3rem, 4.6vw, 1.55rem); line-height: 1.45;
+  display: flex; flex-direction: column; gap: .2rem; color: var(--lamp);
+}
+.voice span { display: block; }
+.attr { font-size: .82rem; color: var(--dim); }
+.lines { display: flex; flex-direction: column; gap: .35rem; }
+.lines p { color: var(--ink); }
+.soft { color: var(--dim); }
+.choice { color: var(--dim); font-style: italic; font-size: .95rem; }
+.quiet { text-align: center; align-items: center; justify-content: center; min-height: 18rem; }
+.quiet p { color: var(--dim); }
+.end-line { font-family: var(--font-voice); font-size: clamp(1.9rem, 7vw, 2.6rem); color: var(--lamp); line-height: 1.2; }
+.small { font-size: .9rem; color: var(--dim); }
+.support { font-size: .9rem; color: var(--dim); border-top: 1px solid var(--edge); padding-top: 1rem; }
+.support strong { color: var(--ink); font-variant-numeric: tabular-nums; user-select: all; }
+a { color: var(--lamp); text-underline-offset: 3px; }
+
+/* The suggestion-box slip: the one lit, physical thing in the dark */
+.slip {
+  position: relative;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 2.6rem, var(--margin-red) 2.6rem, var(--margin-red) calc(2.6rem + 1px), transparent calc(2.6rem + 1px)),
+    repeating-linear-gradient(180deg, transparent 0, transparent calc(2.1rem - 1px), var(--rule-blue) calc(2.1rem - 1px), var(--rule-blue) 2.1rem);
+  background-position: 0 1.2rem;
+  color: var(--pencil);
+  font-family: var(--font-hand);
+  font-size: clamp(1.6rem, 6vw, 1.9rem);
+  line-height: 2.1rem;
+  padding: 1.2rem 1.25rem 1.4rem 3.2rem;
+  border-radius: 2px;
+  transform: rotate(-1.2deg);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .55);
+  max-width: 100%;
+}
+.slip p { margin: 0; }
+.slip .blank { min-height: 6.3rem; }
+.pencil { position: absolute; right: .9rem; top: -1.1rem; width: 2.6rem; height: 2.6rem; transform: rotate(18deg); }
+
+/* Choices on the paper card */
+.picks { display: flex; flex-direction: column; gap: .6rem; }
+.pick {
+  text-align: left; font: inherit; color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--edge); border-radius: 10px; padding: .75rem 1rem; min-height: 44px;
+}
+.pick[aria-pressed="true"] { border-color: var(--lamp); color: var(--lamp); }
+.reply { font-family: var(--font-voice); font-size: 1.25rem; color: var(--lamp); min-height: 1.6em; }
+
+/* Controls */
+.controls { display: flex; justify-content: space-between; align-items: center; gap: .75rem; flex-wrap: wrap; }
+button.nav {
+  font: inherit; font-size: 1rem; cursor: pointer; border-radius: 999px; padding: .65rem 1.4rem; min-height: 44px;
+  border: 1px solid var(--edge); background: transparent; color: var(--dim);
+}
+button.go { border-color: var(--lamp); color: var(--lamp); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--lamp); outline-offset: 3px; }
+.start-buttons { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: .5rem; }
+.counter { font-family: var(--font-badge); font-size: .72rem; color: var(--dim); letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .slip { transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top">
+    <span class="who"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>Hawthorn Care · Nights</span>
+    <button type="button" class="leave" id="leave" hidden>Stop here</button>
+  </div>
+
+  <main class="stage">
+    <section class="card" id="card" aria-live="polite"></section>
+  </main>
+
+  <div class="controls" id="controls" hidden>
+    <span class="counter" id="count"></span>
+    <div class="start-buttons">
+      <button type="button" class="nav" id="back">Back</button>
+      <button type="button" class="nav go" id="next">Continue</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const pencilSvg = `<svg class="pencil" viewBox="0 0 48 48" aria-hidden="true">
+  <rect x="20" y="4" width="8" height="30" rx="1" fill="#c9a43a"/>
+  <rect x="20" y="4" width="8" height="5" fill="#d98e8e"/>
+  <rect x="20" y="9" width="8" height="2" fill="#9aa0a6"/>
+  <polygon points="20,34 28,34 24,44" fill="#e9d6b0"/>
+  <polygon points="22.6,40 25.4,40 24,44" fill="#3f4247"/>
+</svg>`;
+
+const slip = (inner) => `<div class="slip">${pencilSvg}${inner}</div>`;
+
+let paperChoice = null;
+
+const cards = [
+  { label: "4am",
+    html: `<h2>It's four in the morning.</h2>
+      <p>Somewhere, Christine is heating a sandwich in a care-home staff room. She and the microwave have an understanding. Upstairs, they are opening a new wing.</p>` },
+
+  { label: "The room",
+    html: `<h2>Something is happening around you.</h2>
+      <div class="lines">
+        <p>Before you turn this card, notice one thing that is happening where you are.</p>
+        <p>It might be a sound. A movement. The way the light falls.</p>
+        <p>Something this screen could never have prepared.</p>
+      </div>
+      <p class="choice">Or just keep reading.</p>` },
+
+  { label: "The handout",
+    html: `<p>Christine finds a handout from a training day: <em>Simple grounding exercises for carers and residents.</em> She'd filed it under things nobody has time for.</p>
+      <p>Tonight, she tries it.</p>
+      <h2>Find three things.</h2>
+      <div class="lines">
+        <p>They might be within reach. They might be across the room.</p>
+        <p>You don't have to move them.</p>
+        <p>You don't have to name them.</p>
+      </div>
+      <p class="choice">Or just keep reading.</p>` },
+
+  { label: "Your constellation",
+    html: `<p class="voice"><span>That's your constellation.</span><span>Your three points.</span><span>Tomorrow they might move closer.</span><span>Or further apart.</span><span>That's allowed.</span></p>
+      <p class="attr">Christine</p>` },
+
+  { label: "The mug",
+    html: `<p class="voice"><span>This mug.</span><span>I'm sure it had a name once.</span><span>Now it's just… the mug.</span><span>Everyone drinks out of it, nobody washes it properly,</span><span>and it still shows up to work every day.</span></p>
+      <p class="attr">Christine</p>` },
+
+  { label: "Suggestion box",
+    html: `${slip(`<p>Suggestion: a proper mug for nights.</p><p>One each. Names on.</p><p>So we know who we are.</p>`)}
+      <p class="attr">Found in the staff-room suggestion box</p>` },
+
+  { label: "The room",
+    html: `<h2>There's something else in the room.</h2>
+      <div class="lines">
+        <p>Not Christine's room.</p>
+        <p>Yours.</p>
+        <p>It was there before you opened this page.</p>
+        <p>Perhaps you hadn't given it much thought until now.</p>
+        <p class="soft">You don't need to decide what it means.</p>
+      </div>` },
+
+  { label: "Suggestion box",
+    html: `${slip(`<p>Suggestion:</p><p class="blank"></p>`)}
+      <div class="lines">
+        <p>If there's a scrap of paper near you, and a pen, you could write something down.</p>
+        <p>A thought. A name. Something you'd like someone to know.</p>
+        <p class="soft">No one will read it. You won't be asked about it.</p>
+      </div>
+      <p class="choice">Or just keep reading.</p>` },
+
+  { label: "Interruption",
+    html: `<h2>Something may have happened while you were reading.</h2>
+      <div class="lines">
+        <p>A voice nearby. A notification. A door opening.</p>
+        <p>Or perhaps nothing interrupted you at all.</p>
+        <p>Christine's night has continued.</p>
+        <p>So has yours.</p>
+        <p class="soft">You haven't missed anything.</p>
+      </div>` },
+
+  { label: "Her father",
+    html: `<p class="voice"><span>My dad…</span><span>He was a whole country once.</span></p>
+      <p class="voice"><span>My job wasn't to correct him.</span><span>It was to sit there like a paperweight and go,</span><span>'I see you.</span><span>I'm here.</span><span>You're still a person, even if you've mislaid my name.'</span></p>
+      <p class="attr">Christine</p>` },
+
+  { label: "Two rooms",
+    html: `<h2>There are two rooms now.</h2>
+      <div class="lines">
+        <p>One is Christine's.</p>
+        <p>The other is wherever you are.</p>
+        <p>For a few minutes, they've occupied the same story.</p>
+        <p class="soft">Or perhaps you've simply been reading.</p>
+      </div>` },
+
+  { label: "Suggestion box", paper: true,
+    html: () => `<h2>That piece of paper.</h2>
+      <p>If you wrote something, you can decide what happens to it now.</p>
+      <div class="picks" role="group" aria-label="What happens to the paper">
+        <button type="button" class="pick" data-pick="keep" aria-pressed="${paperChoice === "keep"}">Fold it and keep it</button>
+        <button type="button" class="pick" data-pick="crumple" aria-pressed="${paperChoice === "crumple"}">Crumple it up and throw it away</button>
+        <button type="button" class="pick" data-pick="none" aria-pressed="${paperChoice === "none"}">I didn't write anything</button>
+      </div>
+      <p class="reply" id="reply">${replyFor(paperChoice)}</p>
+      <p class="choice">Or just keep reading.</p>` },
+
+  { label: "Take your time", quiet: true,
+    html: `<h2>Take your time.</h2><p>When you're ready, look up.</p>` },
+
+  { label: "Return",
+    html: `<p class="voice"><span>Your three things are still there, yeah?</span><span>Check them.</span></p>
+      <div class="lines">
+        <p>Not to see whether you remembered correctly.</p>
+        <p>Just to see them again.</p>
+        <p>Perhaps nothing has changed.</p>
+        <p>Perhaps something has.</p>
+      </div>
+      <p class="voice"><span>That's allowed.</span></p>` },
+
+  { label: "Still here", closing: true }
+];
+
+function replyFor(choice) {
+  if (choice === "keep") return "Put it somewhere you'll find it again.";
+  if (choice === "crumple") return "It was still written. That's enough.";
+  if (choice === "none") return "That's allowed too.";
+  return "";
+}
+
+const startHtml = `<p class="label">A text piece for the dark</p>
+  <h1>Three Things Still Here</h1>
+  <p>A short piece about care, memory and the things around you. Christine is a fictional night-shift carer. It touches on dementia and loss.</p>
+  <p>It takes about six minutes and needs no sound. If you can, lower the lights. If there's a scrap of paper and a pen nearby, keep them close.</p>
+  <p class="soft">Go at your own pace and stop whenever you like. Nothing you do here is recorded or stored.</p>
+  <div class="start-buttons">
+    <button type="button" class="nav go" id="begin">Begin</button>
+    <button type="button" class="nav" id="begin-return">I've been here before</button>
+  </div>`;
+
+function closingHtml(returning) {
+  return `<p class="end-line">${returning ? "You have been somewhere else since then." : "You were here."}</p>
+    <p>Nothing you did here was recorded.</p>
+    <p class="small">Adapted from <em>The Shape of Things Undone</em>, an audio monologue by Lita Doolan, Brighton Fringe 2026. <a href="https://www.brightonfringe.org/events/the-shape-of-things-undone/" target="_blank" rel="noopener">Hear the full piece</a>.</p>
+    <p class="support">If this touched on something close to you, Dementia UK's Admiral Nurse Dementia Helpline is on <strong>0800 888 6678</strong>.</p>`;
+}
+
+const cardEl = document.getElementById("card");
+const countEl = document.getElementById("count");
+const controls = document.getElementById("controls");
+const back = document.getElementById("back");
+const next = document.getElementById("next");
+const leave = document.getElementById("leave");
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let i = -1;
+let returning = false;
+let busy = false;
+
+function paint() {
+  cardEl.classList.remove("quiet");
+  if (i < 0) {
+    cardEl.innerHTML = startHtml;
+    controls.hidden = true;
+    leave.hidden = true;
+    document.getElementById("begin").onclick = () => go(0, false);
+    document.getElementById("begin-return").onclick = () => go(0, true);
+    return;
+  }
+  const c = cards[i];
+  controls.hidden = false;
+  leave.hidden = !!c.closing;
+  countEl.textContent = `${i + 1} / ${cards.length}`;
+  const body = c.closing ? closingHtml(returning) : (typeof c.html === "function" ? c.html() : c.html);
+  cardEl.innerHTML = `<p class="label">${c.label}</p>${body}`;
+  if (c.quiet) cardEl.classList.add("quiet");
+  next.textContent = c.closing ? "Begin again" : "Continue";
+  if (c.paper) {
+    cardEl.querySelectorAll(".pick").forEach((b) => {
+      b.addEventListener("click", () => {
+        paperChoice = b.dataset.pick;
+        cardEl.querySelectorAll(".pick").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        document.getElementById("reply").textContent = replyFor(paperChoice);
+      });
+    });
+  }
+}
+
+function go(n, ret) {
+  if (busy) return;
+  if (typeof ret === "boolean") { returning = ret; paperChoice = null; }
+  const land = () => {
+    i = n;
+    paint();
+    const target = i < 0 ? document.getElementById("begin") : next;
+    if (target) target.focus({ preventScroll: true });
+  };
+  if (reduce) { land(); return; }
+  busy = true;
+  cardEl.classList.add("out");          // lights down
+  setTimeout(() => {
+    land();
+    setTimeout(() => { cardEl.classList.remove("out"); busy = false; }, 450);  // a breath of dark, then up
+  }, 500);
+}
+
+next.addEventListener("click", () => { if (i >= cards.length - 1) go(-1); else go(i + 1); });
+back.addEventListener("click", () => go(i - 1));
+leave.addEventListener("click", () => go(cards.length - 1));
+document.addEventListener("keydown", (e) => {
+  if (i < 0) return;
+  if (e.key === "ArrowRight") { e.preventDefault(); next.click(); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); back.click(); }
+});
+
+paint();
+</script>
+</body>
+</html>
